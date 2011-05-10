@@ -8,14 +8,20 @@ Example:
     require 'minhttp'
 
     data = <<-HTTP
-    GET / HTTP/1.0
-    Host: www.google.com
+    GET / HTTP/1.0\r
+    Host: www.yahoo.com\r
+
     HTTP
 
-    MinHTTP.connect("www.google.com", data) do |raw_response, parsed_response|
-      puts "Received #{parsed_response.http_status} from Google"
-      puts "Raw HTTP Response: #{raw_response}"
+    EventMachine::run do
+      MinHTTP.connect("www.yahoo.com", data) do |raw_response, parsed_response|
+        puts "Received #{parsed_response.status_code} status from Google"
+        puts "First 100 characters of raw HTTP response:"
+        puts raw_response[0..100]
+        EM::stop
+      end
     end
+
 
 Features:
 

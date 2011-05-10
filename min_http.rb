@@ -16,15 +16,20 @@ class MinHTTP < EventMachine::Connection
   def self.connections
     @@connections
   end
-    
-  def self.configure(options)
+
+  def self.configure(options={})
     @@options = options
     @@logger = options[:logger] || Logger.new(STDOUT)
     @@connections = 0
-    Proxy::SSLValidator.configure
+  end
+
+  def self.configured?
+    class_variable_defined?("@@logger")
   end
 
   def self.connect(host, data, port=80, ssl=false, &callback)
+    configure unless configured?
+
     EventMachine.connect(host, port, self) do |c|
       # this code runs after 'post_init', before 'connection_completed'
       c.host = host
@@ -35,14 +40,22 @@ class MinHTTP < EventMachine::Connection
   end
 
   def post_init
-    @@connections += 1
-    @parser = Http::Parser.new
-    @response_data = ""
+    begin
+      @@connections += 1
+      @parser = Http::Parser.new
+      @response_data = ""
+    rescue Exception => e
+      puts "Error in post_init: #{e}"
+    end
   end
 
   def connection_completed
-    start_tls(:verify_peer => true) if @ssl
-    send_data @request_data
+    begin
+      start_tls(:verify_peer => true) if @ssl
+      send_data @request_data
+    rescue Exception => e
+      puts "Error in connection_completed: #{e}"
+    end
   end
 
   def receive_data(data)
