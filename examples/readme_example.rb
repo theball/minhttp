@@ -1,4 +1,4 @@
-require_relative 'lib/min_http'
+require_relative '../lib/minhttp'
 
 data = <<-HTTP
 GET / HTTP/1.0\r
