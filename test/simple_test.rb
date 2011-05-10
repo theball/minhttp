@@ -8,13 +8,9 @@ GET / HTTP/1.0\r
 Host: www.google.com\r
 
 HTTP
-    puts "simple_test"
-    EM::error_handler do |e|
-      puts "error: #{e}"
-    end
 
     EventMachine::run do
-      MinHTTP.connect("www.google.com", data) do |raw_response, parsed_response|
+      Http::Min.connect("www.google.com", data) do |raw_response, parsed_response|
         assert(parsed_response.status_code == 200, "Response from google should be 200 but is #{parsed_response.status_code}")
         assert(raw_response.length > 0, "Raw response from google should be have size larger than 0")
         EM::stop

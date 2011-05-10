@@ -1,7 +1,7 @@
 require 'openssl'
 require 'logger'
 
-module Proxy
+module Http
   class SSLValidator
     class << self
 
