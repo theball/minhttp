@@ -45,7 +45,8 @@ class MinHTTP < EventMachine::Connection
       @parser = Http::Parser.new
       @response_data = ""
     rescue Exception => e
-      puts "Error in post_init: #{e}"
+      @@logger.error("Error in post_init: #{e}")
+      raise e
     end
   end
 
@@ -69,8 +70,13 @@ class MinHTTP < EventMachine::Connection
   end
 
   def unbind
-    @@connections -= 1
-    @callback.call(@response_data, @parser)
+    begin
+      @@connections -= 1
+      @callback.call(@response_data, @parser)
+    rescue Exception => e
+      @@logger.error("Error in unbind: #{e}")
+      raise e
+    end
   end
 
   #
@@ -78,17 +84,27 @@ class MinHTTP < EventMachine::Connection
   # The certs aren't verified until the handshake is completed
   #
   def ssl_verify_peer(cert)
-    @certs ||= []
-    @certs << cert unless @certs.include?(cert)
-    true
+    begin
+      @certs ||= []
+      @certs << cert unless @certs.include?(cert)
+      true
+    rescue Exception => e
+      @@logger.error("Error in ssl_verify_peer: #{e}")
+      raise e
+    end
   end
   
   #
   # Verify the certs and throw an exception if they are not valid
   #
   def ssl_handshake_completed
-    return unless @@options[:verify_ssl]
-    close_connection unless Proxy::SSLValidator.validate(@certs, @host)
+    begin
+      return unless @@options[:verify_ssl]
+      close_connection unless Proxy::SSLValidator.validate(@certs, @host)
+    rescue Exception => e
+      @@logger.error("Error in ssl_handshake_completed: #{e}")
+      raise e
+    end
   end
 
 end
