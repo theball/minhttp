@@ -1,7 +1,7 @@
 MinHTTP
 =======
 
-An HTTP library for the minimalist. It allows you to send and receive raw HTTP requests. It's a very thin wrapper around EventMachine's connect method with some SSL validation added. It uses http_parser.rb for very fast HTTP parsing.
+An HTTP library for the minimalist. MinHTTP allows you to send and receive raw HTTP requests. It's a very thin wrapper around EventMachine's connect method with some SSL validation added. It uses http_parser.rb for very fast HTTP parsing.
 
 Example:
 
