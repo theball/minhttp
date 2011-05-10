@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative "../lib/min_http"
+require_relative "../lib/minhttp"
 
 class SimpleTest < MiniTest::Unit::TestCase
   def test_simple_google
