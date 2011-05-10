@@ -60,7 +60,7 @@ module Proxy
         configure unless configured?
 
         # Root certs downloaded from: http://curl.haxx.se/ca/cacert.pem
-        ca_file_path = File.join(File.dirname(__FILE__), "cacert.pem")
+        ca_file_path = File.join(File.dirname(__FILE__), "../cacert.pem")
 
         @@store = OpenSSL::X509::Store.new
         splitter = "END CERTIFICATE-----"
