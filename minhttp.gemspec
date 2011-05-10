@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Andrew Farmer"]
   s.email       = ["ahfarmer@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/ahfarmer/minhttp"
   s.summary     = %q{An HTTP library for the minimalist.}
   s.description = %q{MinHTTP allows one to send and receive raw HTTP requests. It's a very thin wrapper around EventMachine's connect method with some SSL validation added.}
 
