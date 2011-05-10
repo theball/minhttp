@@ -1,10 +1,8 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "minhttp/version"
+version = File.read("VERSION").strip
 
 Gem::Specification.new do |s|
   s.name        = "minhttp"
-  s.version     = Minhttp::VERSION
+  s.version     = version
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Andrew Farmer"]
   s.email       = ["ahfarmer@gmail.com"]
