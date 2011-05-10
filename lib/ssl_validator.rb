@@ -20,6 +20,8 @@ module Http
       # step won't run
       #
       def validate(certs, host)
+        configure unless configured?
+
         certs = certs.collect { |c| OpenSSL::X509::Certificate.new(c) }
         @@logger.debug("Verifying certs for #{host}")
         

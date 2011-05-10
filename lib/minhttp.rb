@@ -22,6 +22,7 @@ module Http
       @@options = options
       @@logger = options[:logger] || Logger.new(STDOUT)
       @@connections = 0
+      Http::SSLValidator.configure(options[:ssl_logger])
     end
 
     def self.configured?
