@@ -12,10 +12,9 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "minhttp"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.files         = Dir['README.md', 'VERSION', 'Gemfile', 'Rakefile', 'cacert.pem', 'examples/*', 'lib/*']
+  s.test_files    = Dir['test/*']
+  s.require_path  = "lib"
 
   s.add_dependency "http_parser.rb"
   s.add_dependency "eventmachine"
